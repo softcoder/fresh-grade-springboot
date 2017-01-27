@@ -1,4 +1,4 @@
-# Spring Boot based Hello World app
+# Spring Boot based Student Editor
 
 This project shows a simple Student Editor using REst API's on Google Cloud Platform][cloud-java]. 
 It uses the [Google App Engine flexible environment][App Engine-flexible].
