@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/softcoder/fresh-grade-springboot.svg?branch=master)](https://travis-ci.org/softcoder/fresh-grade-springboot)
+
+To see detailed unit test and code coverage stats visit: https://travis-ci.org/softcoder/riprunner
+
 # Spring Boot based Student Editor
 
 This project shows a simple Student Editor using Rest API's using [Spring Boot][spring-boot] on [Google
