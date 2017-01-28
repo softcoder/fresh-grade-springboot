@@ -7,6 +7,10 @@ environment][App Engine-flexible].
 This application uses Googles Memcached system for storage, so all work will be eventually dunmped from memory
 as per Googles shared memcached policies.
 
+[App Engine-flexible]: https://cloud.google.com/appengine/docs/flexible/
+[cloud-java]: https://cloud.google.com/java/
+[spring-boot]: http://projects.spring.io/spring-boot/
+
 ### Google Cloud Platform URL Deployment:
 
 https://fresh-grade.appspot-preview.com/
