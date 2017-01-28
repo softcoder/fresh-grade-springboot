@@ -113,7 +113,7 @@ public class StudentManagerService {
     	student.setLastName(randomStudent.getResults().get(0).getName().getLast());
     	
     	byte[] photo = restTemplate.getForObject(
-    			randomStudent.getResults().get(0).getPicture().getMedium(), 
+    			randomStudent.getResults().get(0).getPicture().getLarge(), 
     			byte[].class);
     	
     	MediaType mediaType = MediaType.IMAGE_JPEG;
