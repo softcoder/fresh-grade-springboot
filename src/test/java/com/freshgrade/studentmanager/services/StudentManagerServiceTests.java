@@ -72,6 +72,14 @@ public class StudentManagerServiceTests {
 		
 		assertEquals(HttpStatus.OK,result.getStatusCode());
 	}
+
+	@Test
+	public void testCreateStudentByFullNameReversed_ok() throws Throwable {
+		when(dataAccess.findStudentById(eq(101l))).thenReturn(mockStudent1);
+		ResponseEntity result = serviceTest.createStudentByFullName("Stallman, Richard",null);
+		
+		assertEquals(HttpStatus.OK,result.getStatusCode());
+	}
 	
 	@Test
 	public void testCreateStudentByFullName_null_bad_request() throws Throwable {
@@ -81,6 +89,14 @@ public class StudentManagerServiceTests {
 		assertEquals(HttpStatus.BAD_REQUEST,result.getStatusCode());
 	}
 
+	@Test
+	public void testCreateStudentByFullName_invalid_format_bad_request() throws Throwable {
+		when(dataAccess.findStudentById(eq(101l))).thenReturn(mockStudent1);
+		ResponseEntity result = serviceTest.createStudentByFullName("OnlyAFirstName",null);
+		
+		assertEquals(HttpStatus.BAD_REQUEST,result.getStatusCode());
+	}
+	
 	@Test
 	public void testCreateStudent() {
 		Student student = new Student();
