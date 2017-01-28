@@ -9,7 +9,7 @@ import org.mockito.Mockito;
 import com.freshgrade.studentmanager.model.Student;
 import com.freshgrade.studentmanager.services.cache.StudentManagerCacheService;
 
-public class StudentManagerCacheServiceTests {
+public class StudentManagerCacheServiceTest {
 
 	StudentManagerCacheService serviceTest;
 	

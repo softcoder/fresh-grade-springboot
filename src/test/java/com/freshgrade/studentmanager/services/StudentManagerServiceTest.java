@@ -23,7 +23,7 @@ import com.freshgrade.studentmanager.model.Student;
 import com.freshgrade.studentmanager.services.dataaccess.StudentManagerDataAccessService;
 
 
-public class StudentManagerServiceTests {
+public class StudentManagerServiceTest {
 
 	StudentManagerService serviceTest;
 	

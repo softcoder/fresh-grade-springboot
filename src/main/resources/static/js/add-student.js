@@ -28,8 +28,14 @@ function trigger_submit_form() {
                 window.location.href = "/view_student_detail.html?student_id="+data.id;
             },
             error: function (xhr, ajaxOptions, thrownError) {
-            	//debugger;
-                alert('Error Status: '+ xhr.status + ' message: ' + xhr.responseText);
+            	if(xhr.responseText.indexOf('The field photoFile exceeds its maximum permitted size of') != -1) {
+            		var item = xhr.responseText;
+            		var matches = item.match('/.*The field photoFile exceeds its maximum permitted size of (.*) bytes.*/');
+            		alert("Uploaded files should not be larger than " + matches[1] + ' bytes');
+                }
+            	else {
+                	alert('Error Status: '+ xhr.status + ' message: ' + xhr.responseText);
+            	}
             }
         });
     }
