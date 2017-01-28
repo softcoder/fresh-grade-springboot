@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/softcoder/fresh-grade-springboot.svg?branch=master)](https://travis-ci.org/softcoder/fresh-grade-springboot)
 
-To see detailed unit test and code coverage stats visit: https://travis-ci.org/softcoder/riprunner
+To see detailed unit test and code coverage stats visit: https://travis-ci.org/softcoder/fresh-grade-springboot
 
 # Spring Boot based Student Editor
 
