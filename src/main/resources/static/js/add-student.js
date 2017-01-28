@@ -1,6 +1,6 @@
 
 function trigger_submit_form() {
-    //debugger;
+    debugger;
     var encodedName = encodeURIComponent($("#full_name").val());
     if(encodedName != null && encodedName.trim() != '') {
         var formData = null;
@@ -10,7 +10,8 @@ function trigger_submit_form() {
             formData.append('photoFile', photoData); 
         }
         // Can't copy the Image to upload to the rest API when pulled down from another domain.
-        else if($('#photoFilePreview').attr('src') != '') {
+        else if($('#photoFilePreview').attr('src') != '' && 
+        		$('#photoFilePreview').attr('src').indexOf('data:image') != -1) {
             var photo = dataURItoBlob($('#photoFilePreview').attr('src'));
             formData = new FormData();
             formData.append('photoFile', photo);
