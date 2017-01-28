@@ -1,6 +1,6 @@
 
 function trigger_submit_form() {
-    debugger;
+    //debugger;
     var encodedName = encodeURIComponent($("#full_name").val());
     if(encodedName != null && encodedName.trim() != '') {
         var formData = null;
