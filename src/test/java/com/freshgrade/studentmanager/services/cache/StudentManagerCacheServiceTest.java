@@ -1,3 +1,8 @@
+/*
+ * Demo Project for Fresh Grade Rest API test
+ * By: Mark Vejvoda
+ */
+
 package com.freshgrade.studentmanager.services.cache;
 
 import static org.junit.Assert.assertEquals;

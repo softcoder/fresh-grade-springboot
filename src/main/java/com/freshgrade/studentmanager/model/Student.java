@@ -1,3 +1,8 @@
+/*
+ * Demo Project for Fresh Grade Rest API test
+ * By: Mark Vejvoda
+ */
+
 package com.freshgrade.studentmanager.model;
 
 import org.springframework.http.MediaType;

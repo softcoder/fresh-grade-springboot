@@ -1,3 +1,8 @@
+/*
+ * Demo Project for Fresh Grade Rest API test
+ * By: Mark Vejvoda
+ */
+
 package com.freshgrade.studentmanager.services.dataaccess;
 
 import java.util.ArrayList;
@@ -17,7 +22,6 @@ import com.freshgrade.studentmanager.services.cache.StudentManagerCacheService;
 /**
  * This is the Data Access Service providing access to the Student Entities
  * @author softcoder
- *
  */
 @Component
 public class StudentManagerDataAccessService {

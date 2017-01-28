@@ -1,5 +1,14 @@
+/*
+ * Demo Project for Fresh Grade Rest API test
+ * By: Mark Vejvoda
+ */
+
 package com.freshgrade.studentmanager.model;
 
+/**
+ * Entity representing a student name
+ * @author softcoder
+ */
 public class RandomStudentName {
 
 	private String title;

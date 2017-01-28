@@ -1,14 +1,15 @@
+/*
+ * Demo Project for Fresh Grade Rest API test
+ * By: Mark Vejvoda
+ */
+
 package com.freshgrade.studentmanager.services;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Collection;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -34,7 +35,6 @@ import com.freshgrade.studentmanager.services.dataaccess.StudentManagerDataAcces
  * This Service manages the Rest Entry Points for this application
  * @RestController
  * @author softcoder
- *
  */
 // The root base URL
 @RestController
@@ -79,14 +79,9 @@ public class StudentManagerService {
     	if(fullName != null) {
 	        fullName = java.net.URLDecoder.decode(fullName, "UTF-8");
 	        Student student = extractStudentFromFullName(fullName);
-	        if(student != null) {
-	            if(photoFileRef != null && photoFileRef.getInputStream() != null && 
-	            		photoFileRef.getContentType() != null) {
-			        byte bytesForProfilePhoto[] = FileCopyUtils.copyToByteArray(
-			        		photoFileRef.getInputStream());
-			        MediaType mt = MediaType.parseMediaType(
-			        		photoFileRef.getContentType());
-	                student.setPhoto(bytesForProfilePhoto,mt);
+	        if(validStudent(student)) {
+	            if(validPhoto(photoFileRef)) {
+			        extractStudentPhoto(photoFileRef, student);
 	            }
 	            student = getDataAccess().addStudent(student);
 	            return ResponseEntity.ok(student);
@@ -95,6 +90,23 @@ public class StudentManagerService {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).
         		body("Student name format was invalid: " + fullName);
     }
+
+	boolean validStudent(Student student) {
+		return student != null;
+	}
+
+	boolean validPhoto(MultipartFile photoFileRef) throws IOException {
+		return photoFileRef != null && photoFileRef.getInputStream() != null && 
+				photoFileRef.getContentType() != null;
+	}
+
+	void extractStudentPhoto(MultipartFile photoFileRef, Student student) throws IOException {
+		byte bytesForProfilePhoto[] = FileCopyUtils.copyToByteArray(
+				photoFileRef.getInputStream());
+		MediaType mt = MediaType.parseMediaType(
+				photoFileRef.getContentType());
+		student.setPhoto(bytesForProfilePhoto,mt);
+	}
 
     /**
      * Rest API to create a student given their entity in the data access layer
@@ -152,7 +164,7 @@ public class StudentManagerService {
     @RequestMapping(path="delete/{id}",method=RequestMethod.DELETE)
     public ResponseEntity deleteStudent(@PathVariable("id") long id) {
         Student student = getDataAccess().deleteStudent(id);
-        if(student != null) {
+        if(validStudent(student)) {
             return ResponseEntity.ok(student);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).
