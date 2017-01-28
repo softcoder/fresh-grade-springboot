@@ -1,7 +1,7 @@
 <html>
 <link rel="stylesheet" type="text/css" href="css/main.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
+<script src="/js/view-students.js"></script>
 <body>
     <div class="header-container">
         <table class="table-center">
@@ -37,37 +37,8 @@
     </div>
 
 <script>
-function deleteStudent(student_id) {
-    $.ajax({
-        url: "/v1/student-manager/delete/"+student_id,
-        type: "DELETE",
-        success: function ( data ) {
-            //debugger;
-            $("#student_"+student_id).remove();
-         },
-         error: function (xhr, ajaxOptions, thrownError) {
-            alert('Error Status: '+ xhr.status + ' message: ' + xhr.responseText);
-         },
-         cache: false
-    });
-}
-
 $(document).ready(function() {
-    $.ajax({
-        url: "/v1/student-manager",
-        success: function ( data ) {
-            $.each(data,function(){
-                $("#student_div").append("<tr id='student_"+this.id+"' name='student_"+this.id+"'>" + 
-                "<td><a class='student-container-black no-decor-link' href='/view_student_detail.html?student_id="+this.id+"'>"+this.firstName+" "+this.lastName+"</a></td>"+
-                "<td><a class='student-container-black right-arrow-gray no-decor-link' href='/view_student_detail.html?student_id="+this.id+"'>></a></td>"+
-                "<td><a class='no-decor-link' href='#' onclick='deleteStudent("+this.id+"); return false;'><img class='delete-icon' title='Delete this student.' src='/images/delete-icon.png'></a></td></tr>");
-            });
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            alert('Error Status: '+ xhr.status + ' message: ' + xhr.responseText);
-        },
-        cache: false
-    });
+	populateStudents();
 });
 </script>
 </body>

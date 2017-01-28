@@ -1,7 +1,8 @@
 <html>
 <link rel="stylesheet" type="text/css" href="css/main.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
+<script src="/js/student-toolkit.js"></script>
+<script src="/js/add-student.js"></script>
 <body>
     <div class="header-container">
         <form id="add_student_form" action="/v1/student-manager/create_fullname" method="post" enctype="multipart/form-data">
@@ -33,7 +34,7 @@
             <tr>
                 <td>
                     <div class="action-container">
-                        <image class="photo-container" id="photoFilePreview" name="photoFilePreview" src="images/photo-default.png">
+                        <img class="photo-container" id="photoFilePreview" name="photoFilePreview" src="images/photo-default.png">
                         <a href="#" onclick="$('#photoFile').trigger('click');" class="head-blue no-decor-link"><img class="info-icon" title="Add a student." src="/images/add-icon.png">Add Profile Photo</a>
                         <input type="file" name="photoFile" id="photoFile" accept="image/png image/jpg" class="hide-item">
                     </div>
@@ -55,90 +56,9 @@
     </div>
 
 <script>
-function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            $('#photoFilePreview').attr('src', e.target.result);
-        }
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
-$("#photoFile").change(function(){
-    readURL(this);
+$("#photoFile").change(function() {
+    readURL(this,'#photoFilePreview');
 });
-
-function getBase64Image(img) {
-    
-    var canvas = document.createElement("canvas");
-    canvas.width = img.width;
-    canvas.height = img.height;
-    var ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 10, 10);
-    var dataURL = canvas.toDataURL("image/jpg");
-    // Can't copy the Image to upload to the rest API when pulled down from another domain.
-    var dataURL = canvas.toDataURL();
-    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-}
-
-
-function trigger_submit_form() {
-    //debugger;
-    var encodedName = encodeURIComponent($("#full_name").val());
-    if(encodedName != null && encodedName.trim() != '') {
-        var formData = null;
-        if($('input[type=file]')[0].files.length > 0) {
-            formData = new FormData();
-            formData.append('photoFile', $('input[type=file]')[0].files[0]); 
-        }
-/*        
-        // Can't copy the Image to upload to the rest API when pulled down from another domain.
-        else if($('#photoFilePreview').src != '') {
-            var base64 = getBase64Image(document.getElementById('photoFilePreview'));
-            if(base64 != null) {
-                formData = new FormData();
-                formData.append('photoFile', base64); 
-            }
-        }
-*/
-        $.ajax({
-            url: "/v1/student-manager/create_fullname?full_name="+encodedName,
-            type: "POST",
-            encoding:"UTF-8",
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function ( data ) {
-                window.location.href = "/view_student_detail.html?student_id="+data.id;
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-            	//debugger;
-                alert('Error Status: '+ xhr.status + ' message: ' + xhr.responseText);
-            }
-        });
-    }
-    else {
-        $('#full_name_submit').trigger('click');
-    }
-}
-
-function getRandomUser() {
-    $.ajax({
-      url: 'https://randomuser.me/api/?inc=name,picture',
-      contentType: "application/json; charset=utf-8",
-      dataType: 'json',
-      success: function(data) {
-        //debugger;        
-        console.log(data);
-
-        var encodedName = data.results[0].name.first + ' ' + data.results[0].name.last;
-        $("#full_name").val(encodedName);
-        $('#photoFilePreview').attr('src', data.results[0].picture.medium).fadeIn();
-      }
-    });
-}
 </script>
 </body>
 </html>

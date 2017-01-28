@@ -1,9 +1,14 @@
 package com.freshgrade.studentmanager.services;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Collection;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.http.MediaType;
 
+import com.freshgrade.studentmanager.model.RandomStudentResultContainer;
 import com.freshgrade.studentmanager.model.Student;
 import com.freshgrade.studentmanager.services.dataaccess.StudentManagerDataAccessService;
 
@@ -75,7 +82,6 @@ public class StudentManagerService {
 	        if(student != null) {
 	            if(photoFileRef != null && photoFileRef.getInputStream() != null && 
 	            		photoFileRef.getContentType() != null) {
-
 			        byte bytesForProfilePhoto[] = FileCopyUtils.copyToByteArray(
 			        		photoFileRef.getInputStream());
 			        MediaType mt = MediaType.parseMediaType(
@@ -90,6 +96,31 @@ public class StudentManagerService {
         		body("Student name format was invalid: " + fullName);
     }
 
+    /**
+     * Rest API to create a student given their entity in the data access layer
+     * @param student - the Student entity to crate
+     * @return - the newly created Student entity
+     * @throws IOException 
+     */
+    @RequestMapping(path="create_random",method=RequestMethod.POST)
+    public Student createRandomStudent() throws IOException {
+    	RestTemplate restTemplate = new RestTemplate();
+    	RandomStudentResultContainer randomStudent = restTemplate.getForObject(
+    			"https://randomuser.me/api/?inc=name,picture&noinfo", 
+    			RandomStudentResultContainer.class);
+    	Student student = new Student();
+    	student.setFirstName(randomStudent.getResults().get(0).getName().getFirst());
+    	student.setLastName(randomStudent.getResults().get(0).getName().getLast());
+    	
+    	byte[] photo = restTemplate.getForObject(
+    			randomStudent.getResults().get(0).getPicture().getMedium(), 
+    			byte[].class);
+    	
+    	MediaType mediaType = MediaType.IMAGE_JPEG;
+    	student.setPhoto(photo,mediaType);
+    	return student;
+    }
+    
     /**
      * Rest API to create a student given their entity in the data access layer
      * @param student - the Student entity to crate
