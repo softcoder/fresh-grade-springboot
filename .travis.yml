@@ -1,7 +1,7 @@
 # https://docs.travis-ci.com/user/customizing-the-build/
 language: java
 
-script: mvn clean test
+script: mvn test
 
 notifications:
   # Email notifications are disabled to not annoy anybody.
