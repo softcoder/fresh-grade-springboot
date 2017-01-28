@@ -17,7 +17,13 @@ as per Googles shared memcached policies.
 
 ### Google Cloud Platform URL Deployment:
 
+To interact with the application user interface goto:
+
 https://fresh-grade.appspot-preview.com/
+
+To see the Rest API SWagger based documentation goto:
+
+https://fresh-grade.appspot-preview.com/swagger-ui.html
 
 To Deploy Locally run the following from the root project folder:
 

@@ -7,6 +7,10 @@ package com.freshgrade.studentmanager.model;
 
 import org.springframework.http.MediaType;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * This class represents a Student model in this application
  * @author softcoder
@@ -14,10 +18,20 @@ import org.springframework.http.MediaType;
  */
 public class Student {
 
+	@JsonProperty(required = true)
+    @ApiModelProperty(notes = "The student id", required = true)
     private long id;
+	@JsonProperty(required = true)
+	@ApiModelProperty(notes = "The student first name", required = true)
     private String firstName;
+	@JsonProperty(required = true)
+	@ApiModelProperty(notes = "The student last name", required = true)
     private String lastName;
+	@JsonProperty(required = true)
+	@ApiModelProperty(notes = "The student photo", required = false)
     private byte[] photo;
+	@JsonProperty(required = true)
+	@ApiModelProperty(notes = "The media type of the student photo", required = false)
 	private MediaType mediaType;
 
     public Student() {
