@@ -17,8 +17,13 @@ import org.mockito.Mockito;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.any;
 import org.mockito.MockitoAnnotations;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+
 import static org.mockito.Mockito.verify;
+import static org.mockito.AdditionalAnswers.returnsFirstArg;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,7 +69,7 @@ public class StudentManagerServiceTest {
 	@Test
 	public void testCreateStudentByFullName_ok() throws Throwable {
 		when(dataAccess.findStudentById(eq(101l))).thenReturn(mockStudent1);
-		ResponseEntity result = serviceTest.createStudentByFullName("Richard Stallman",null);
+		ResponseEntity<Student> result = serviceTest.createStudentByFullName("Richard Stallman",null);
 		
 		assertEquals(HttpStatus.OK,result.getStatusCode());
 	}
@@ -73,11 +78,28 @@ public class StudentManagerServiceTest {
 	public void testCreateStudentByFullNameAndPhoto_ok() throws Throwable {
 		MultipartFile photoFileRef = mock(MultipartFile.class);
 		when(dataAccess.findStudentById(eq(101l))).thenReturn(mockStudent1);
-		ResponseEntity result = serviceTest.createStudentByFullName("Richard Stallman",photoFileRef);
+		ResponseEntity<Student> result = serviceTest.createStudentByFullName("Richard Stallman",photoFileRef);
 		
 		assertEquals(HttpStatus.OK,result.getStatusCode());
 	}
 
+	@Test
+	public void testCreateStudentByFullNameAndScriptInjection_ok() throws Throwable {
+		when(dataAccess.findStudentById(eq(101l))).thenReturn(mockStudent1);
+		//doAnswer(returnsFirstArg()).when(dataAccess).addStudent(any(Student.class));
+		when(dataAccess.addStudent(any(Student.class))).thenAnswer(new Answer<Student>() {
+		   public Student answer(InvocationOnMock invocation) throws Throwable {
+		      return (Student) invocation.getArguments()[0];
+		   }
+		});
+
+		ResponseEntity<Student> result = serviceTest.createStudentByFullName(
+				"Stallman, <script>alert('hello hack');</script>",null);
+		
+		assertEquals(HttpStatus.OK,result.getStatusCode());
+		assertEquals("&lt;script&gt;alert(&#39;hello hack&#39;);&lt;/script&gt;",result.getBody().getFirstName());
+	}
+	
 	@Test
 	public void testCreateStudentByFullNameReversed_ok() throws Throwable {
 		when(dataAccess.findStudentById(eq(101l))).thenReturn(mockStudent1);

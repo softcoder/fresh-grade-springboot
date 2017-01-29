@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.HtmlUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -106,6 +107,7 @@ public class StudentManagerService {
             MultipartFile photoFileRef) throws Throwable {
     	if(fullName != null) {
 	        fullName = java.net.URLDecoder.decode(fullName, "UTF-8");
+	        fullName = HtmlUtils.htmlEscape(fullName);
 	        Student student = extractStudentFromFullName(fullName);
 	        if(validStudent(student)) {
 	            if(validPhoto(photoFileRef)) {
