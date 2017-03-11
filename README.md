@@ -19,11 +19,11 @@ eventually dunmped from memory as per Googles shared memcached policies.
 
 To interact with the application's user interface goto:
 
-https://fresh-grade.appspot-preview.com/
+https://fresh-grade.appspot-preview.com/  (disabled for now to avoid google billing costs)
 
 To see the Rest API Swagger based documentation goto:
 
-https://fresh-grade.appspot-preview.com/swagger-ui.html
+https://fresh-grade.appspot-preview.com/swagger-ui.html  (disabled for now to avoid google billing costs)
 
 To Deploy Locally run the following from the root project folder:
 
