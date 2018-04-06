@@ -15,6 +15,25 @@ eventually dumped from memory as per Googles shared memcached policies.
 [cloud-java]: https://cloud.google.com/java/
 [spring-boot]: http://projects.spring.io/spring-boot/
 
+### Local Development Deployment:
+
+Compile the app:
+
+mvn compile
+
+Run the embedded local server:
+
+mvn spring-boot:run
+
+To interact with the application's user interface goto:
+
+http://localhost:8080
+
+To see the Rest API Swagger based documentation goto:
+
+http://localhost:8080/swagger-ui.html
+
+
 ### Google Cloud Platform URL Deployment:
 
 To interact with the application's user interface goto:
@@ -25,9 +44,9 @@ To see the Rest API Swagger based documentation goto:
 
 https://fresh-grade.appspot-preview.com/swagger-ui.html  (disabled for now to avoid google billing costs)
 
-To Deploy Locally run the following from the root project folder:
+Compile the app:
 
-mvn spring-boot:run
+mvn compile
 
 To Deploy to Google Cloud run the following from the root project folder:
 (first ensure you have configured your project as per https://github.com/GoogleCloudPlatform/getting-started-java/tree/master/helloworld-springboot)
